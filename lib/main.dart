@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sports',
-      theme: SAppTheme.lightTheme ,
+      theme: SAppTheme.lightTheme,
       darkTheme: SAppTheme.darkTheme,
       home: const SplashScreen(),
     );

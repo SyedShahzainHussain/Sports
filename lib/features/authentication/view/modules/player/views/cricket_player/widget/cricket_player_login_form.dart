@@ -20,11 +20,11 @@ class CricketPlayerForm extends StatefulWidget {
 class _CricketPlayerFormState extends State<CricketPlayerForm> {
   final countryController = TextEditingController();
   final nameController = TextEditingController();
-  final emailAddressController = TextEditingController();
   final cnicController = TextEditingController();
   final contactNumberController = TextEditingController();
   final addressController = TextEditingController();
   final organizationTextController = TextEditingController();
+  final emailAddressController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -35,7 +35,6 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
   @override
   void initState() {
     super.initState();
-    _selectedValue = "Under 13"; // Set the initial value here
   }
 
   @override
@@ -187,7 +186,8 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
               height: TSized.spacebetweenItem,
             ),
             // ! Category
-            DropdownButtonFormField(
+            DropdownButtonFormField<String?>(
+              hint: const Text("Selected Category"),
               decoration: const InputDecoration(
                 labelText: "Category",
               ),
