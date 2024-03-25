@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:sports/common/widget/textfield/text_form_field_widget.dart';
-import 'package:sports/features/authentication/view/modules/player/views/cricket_player/widget/cricket_player_cnic_doc.dart';
+import 'package:sports/features/authentication/view/modules/player/viewModel/cricket_player_view_model.dart';
+
 import 'package:sports/utils/constants/colors.dart';
 import 'package:sports/utils/constants/size.dart';
 import 'package:dob_input_field/dob_input_field.dart';
@@ -60,12 +62,34 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
         countryController.text.isEmpty ||
         _isMale == null) {
       // Check if the context is available within a Scaffold
-      THelperFunction.showFlushBar("All Fields Are Required!", context);
+      THelperFunction.showFlushBar("All Fields Are Required!", icon: const Icon(
+        Icons.error,
+        color: Colors.red,
+      ), context);
     } else if (dateOfBirth == null) {
-      THelperFunction.showFlushBar("Date of birth is required", context);
+      THelperFunction.showFlushBar("Date of birth is required",icon: const Icon(
+        Icons.error,
+        color: Colors.red,
+      ), context);
     } else {
-      THelperFunction.navigatedToScreen(
-          context, const CricketPlayerDocumentScreen());
+      _formKey.currentState!.save();
+      final body = {
+        "name": nameController.text.toString(),
+        "email": emailAddressController.text.toString(),
+        "password": passwordController.text.toString(),
+        "dateofbirth": dateOfBirth,
+        "number": contactNumberController.text.toString(),
+        "address": addressController.text.toString(),
+        "organizationcurrentlyaffliated":
+            organizationTextController.text.toString(),
+        "country": countryController.text.toString(),
+        "gender": _isMale! ? "Male" : "Female",
+        "category": _selectedValue,
+        "nicNumber": cnicController.text.toString()
+      };
+      context
+          .read<CricketPlayerViewModel>()
+          .cricketPlayerSignUpApi(body, context);
     }
   }
 

@@ -1,52 +1,40 @@
 class TAPiString {
   TAPiString._();
 
-  static const String baseApiUrl =
-      "https://client-backend-4pho.onrender.com/user";
-
-  static const String baseApiUrl2 =
-      "https://client-backend-4pho.onrender.com/cyco";
-
-  // * Patient
+  static const String baseApiUrl = "https://sports-fr3q.onrender.com";
+  // * Cricket Player
 
   // ! register
-  static const register = "$baseApiUrl/register";
+  static const cricketRegister = "$baseApiUrl/createcricketplayer";
 
   // ! registerallData
-  static const registerAllData = "$baseApiUrl/updatedUser";
-
-  // ! verify otp
-  static const verifyOtp = "$baseApiUrl/verify";
+  static const cricketRegisterAllData = "$baseApiUrl/cricket-nic/pdf";
 
   // ! login api
-  static const login = "$baseApiUrl/login";
+  static const cricketLogin = "$baseApiUrl/cricketlogin";
 
-  // ! forgot api
-  static const forgotPassword = "$baseApiUrl/forgetPassword";
-
-  // ! reset password api
-  static const resetPassword = "$baseApiUrl/resetPassword";
-  // ! reset password api
-  static const updateStep = "$baseApiUrl/updatedUser";
-
-  // * Psychologist
-
-  // ! cnic api
-  static const ageGender = "$baseApiUrl2/age-gender";
-  static const cnic = "$baseApiUrl2/cinic";
+  // * Swimming Player
   // ! register
-  static const psyregister = "$baseApiUrl2/register";
-  // ! verify otp
-  static const psyverifyOtp = "$baseApiUrl2/verify";
-  // ! degree
-  static const degreeImg = "$baseApiUrl2/pdf";
-  // ! licience
-  static const licience = "$baseApiUrl2/licience";
+  static const swimmingRegister = "$baseApiUrl/createswimmingplayer";
 
-  // ! forgot
-  static const phyforgot = "$baseApiUrl2/forgetPassword";
-   // ! reset password api
-  static const psyresetPassword = "$baseApiUrl2/resetPassword";
-    // ! login api
-  static const psylogin = "$baseApiUrl2/login";
+  // ! registerallData
+  static const swimmingRegisterAllData = "$baseApiUrl/swimming-nic/pdf";
+
+  // ! login api
+  static const swimmingLogin = "$baseApiUrl/swimminglogin";
+
+  // * Cricket Organization
+  // ! register
+  static const cricketOrganizationRegister =
+      "$baseApiUrl/createcricketorganization";
+  // ! login api
+  static const cricketOrganizationLogin =
+      "$baseApiUrl/logincricketorganization";
+  // * Swimming Organization
+  // ! register
+  static const swimmingOrganizationRegister =
+      "$baseApiUrl/createswimingorganization";
+  // ! login api
+  static const swimmingOrganizationLogin =
+      "$baseApiUrl/loginswimingorganization";
 }

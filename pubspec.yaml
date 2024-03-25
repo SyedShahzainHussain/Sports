@@ -31,6 +31,12 @@ dependencies:
   dob_input_field: ^2.0.0
   country_picker: ^2.0.25
   another_flushbar: ^1.12.30
+  modal_progress_hud_nsn:
+  # firebase
+  firebase_storage:
+  firebase_core:
+  uuid:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

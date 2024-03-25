@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sports/common/widget/container/circular_container.dart';
 import 'package:sports/common/widget/appBar/custom_appbar.dart';
-import 'package:sports/features/authentication/view/choose_your_category/choose_your_category.dart';
-import 'package:sports/features/authentication/view/choose_your_sport/choose_your_sport.dart';
+import 'package:sports/common/widget/choose_your_category/choose_your_category.dart';
+import 'package:sports/common/widget/choose_your_sport/choose_your_sport.dart';
 import 'package:sports/features/authentication/view/modules/organization/views/cricket_organization/cricket_login_organization.dart';
 import 'package:sports/features/authentication/view/modules/organization/views/cricket_organization/cricket_register_organization.dart';
 import 'package:sports/features/authentication/view/modules/organization/views/swimming_organization/swimming_login_organization.dart';

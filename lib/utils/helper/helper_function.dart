@@ -158,18 +158,19 @@ class THelperFunction {
     );
   }
 
-  static void showFlushBar(String msg, BuildContext context) {
+  static void showFlushBar(String msg,  BuildContext context,
+      {Widget? icon}) {
     Flushbar(
       margin: const EdgeInsets.all(TSized.defaultSpace),
       borderRadius: BorderRadius.circular(TSized.cardRadiusXsm),
-      icon: const Icon(Icons.error,color: Colors.red,),
+      icon: icon,
       message: msg,
       duration: const Duration(seconds: 3),
     ).show(context);
   }
 
   static Widget showIndicator([double? size = 50]) {
-    return SpinKitChasingDots(
+    return SpinKitHourGlass(
       color: TColors.primary,
       size: size!,
     );
@@ -193,9 +194,7 @@ class THelperFunction {
   static Future<PdfFile?> pickFilePdf(BuildContext context) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowedExtensions: [
-          'pdf','doc','png','jpeg'
-        ],
+        allowedExtensions: ['pdf'],
         type: FileType.custom,
       );
       if (result == null) {

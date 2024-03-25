@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:sports/common/widget/textfield/text_form_field_widget.dart';
-import 'package:sports/common/widget/verify_screen/verify_screen.dart';
 import 'package:sports/features/authentication/model/pdf_file_model.dart';
+import 'package:sports/features/authentication/view/modules/organization/viewModel/swimming_organization_view_model.dart';
 import 'package:sports/utils/constants/colors.dart';
 import 'package:sports/utils/constants/size.dart';
 import 'package:sports/utils/helper/helper_function.dart';
@@ -41,10 +42,25 @@ class _SwimmingStateOrganizationForm extends State<SwimmingOrganizationForm> {
 
     if (_selectedValue == null || countryController.text.isEmpty) {
       // Check if the context is available within a Scaffold
-      THelperFunction.showFlushBar("All Fields Are Required!", context);
+      THelperFunction.showFlushBar(
+          "All Fields Are Required!", icon: const Icon(
+        Icons.error,
+        color: Colors.red,
+      ), context);
     } else {
-      THelperFunction.navigatedToScreen(
-          context, const VerifyPendingScreen());
+      context
+          .read<SwimmingOrganizationViewModel>()
+          .swimmingOrganizationSignUpApi(
+            name: nameController.text.toString(),
+            email: emailAddressController.text.toString(),
+            password: passwordController.text.toString(),
+            number: contactNumberController.text.toString(),
+            address: addressController.text.toString(),
+            country: countryController.text.toString(),
+            file: pdfFile!.file,
+            context: context,
+            selectedValue: _selectedValue!,
+          );
     }
   }
 
