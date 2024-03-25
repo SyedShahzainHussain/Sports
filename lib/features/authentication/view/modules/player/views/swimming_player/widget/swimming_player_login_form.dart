@@ -29,6 +29,7 @@ class _CricketPlayerFormState extends State<SwimmingPlayerForm> {
   final passwordController = TextEditingController();
   final categoryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  ValueNotifier<bool> isObsecure = ValueNotifier<bool>(true);
 
   bool? _isMale;
   String? dateOfBirth;
@@ -71,6 +72,7 @@ class _CricketPlayerFormState extends State<SwimmingPlayerForm> {
           ),
           context);
     } else {
+      _formKey.currentState!.save();
       final body = {
         "name": nameController.text.toString(),
         "email": emailAddressController.text.toString(),
@@ -118,13 +120,25 @@ class _CricketPlayerFormState extends State<SwimmingPlayerForm> {
             const SizedBox(
               height: TSized.spacebetweenItem,
             ),
-            TextFormField(
-              validator: (value) => SValidation.validatePassword(value),
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.password),
-                labelText: "Password",
+            ValueListenableBuilder(
+              valueListenable: isObsecure,
+              builder: (context, value, child) => TextFormField(
+                obscuringCharacter: "*",
+                obscureText: isObsecure.value,
+                validator: (value) => SValidation.validatePassword(value),
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        isObsecure.value ? Iconsax.eye_slash : Iconsax.eye),
+                    onPressed: () {
+                      isObsecure.value = !isObsecure.value;
+                    },
+                  ),
+                  prefixIcon: const Icon(Icons.password),
+                  labelText: "Password",
+                ),
               ),
             ),
             const SizedBox(
@@ -136,16 +150,10 @@ class _CricketPlayerFormState extends State<SwimmingPlayerForm> {
               showLabel: true,
               lastDate: DateTime.now(),
               onDateSubmitted: (value) {
-                setState(() {
-                  dateOfBirth =
-                      '${DateTime(value.year, value.month, value.day)}';
-                });
+                dateOfBirth = '${DateTime(value.year, value.month, value.day)}';
               },
               onDateSaved: (value) {
-                setState(() {
-                  dateOfBirth =
-                      '${DateTime(value.year, value.month, value.day)}';
-                });
+                dateOfBirth = '${DateTime(value.year, value.month, value.day)}';
               },
               inputDecoration: InputDecoration(
                 prefixIcon: const Padding(

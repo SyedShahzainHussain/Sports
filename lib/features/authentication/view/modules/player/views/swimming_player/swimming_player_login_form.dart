@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sports/common/widget/appBar/custom_appbar.dart';
@@ -20,7 +21,7 @@ class _SwimmingPlayerLoginState extends State<SwimmingPlayerLogin> {
   final emailAddressController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+ValueNotifier<bool> isObsecure = ValueNotifier<bool>(true);
   void onSave() {
     final validate = _formKey.currentState!.validate();
     if (!validate) {
@@ -74,14 +75,27 @@ class _SwimmingPlayerLoginState extends State<SwimmingPlayerLogin> {
                           const SizedBox(
                             height: TSized.spacebetweenItem,
                           ),
-                          TextFormField(
-                            validator: (value) =>
-                                SValidation.validatePassword(value),
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.password),
-                              labelText: "Password",
+                           ValueListenableBuilder(
+                            valueListenable: isObsecure,
+                            builder: (context, value, child) => TextFormField(
+                              obscuringCharacter: "*",
+                              obscureText: isObsecure.value,
+                              validator: (value) =>
+                                  SValidation.validatePassword(value),
+                              controller: passwordController,
+                              keyboardType: TextInputType.text,
+                              decoration:  InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(isObsecure.value
+                                      ? Iconsax.eye_slash
+                                      : Iconsax.eye),
+                                  onPressed: () {
+                                    isObsecure.value = !isObsecure.value;
+                                  },
+                                ),
+                                prefixIcon: const Icon(Icons.password),
+                                labelText: "Password",
+                              ),
                             ),
                           ),
                           const SizedBox(

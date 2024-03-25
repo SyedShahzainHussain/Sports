@@ -4,7 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sports/common/widget/container/expanded_file_container.dart';
 import 'package:sports/common/widget/appBar/custom_appbar.dart';
-import 'package:sports/common/widget/verify_screen/verify_screen.dart';
+
 import 'package:sports/features/authentication/model/pdf_file_model.dart';
 import 'package:sports/features/authentication/view/modules/player/viewModel/swimming_player_view_model.dart';
 import 'package:sports/utils/constants/colors.dart';

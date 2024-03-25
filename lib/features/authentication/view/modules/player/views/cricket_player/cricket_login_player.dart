@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sports/common/widget/appBar/custom_appbar.dart';
@@ -19,6 +20,7 @@ class CricketLoginPlayer extends StatefulWidget {
 class _CricketLoginPlayerState extends State<CricketLoginPlayer> {
   final emailAddressController = TextEditingController();
   final passwordController = TextEditingController();
+  ValueNotifier<bool> isObsecure = ValueNotifier<bool>(true);
   final _formKey = GlobalKey<FormState>();
 
   void onSave() {
@@ -44,8 +46,7 @@ class _CricketLoginPlayerState extends State<CricketLoginPlayer> {
         showBackArrow: true,
       ),
       body: Consumer<CricketPlayerViewModel>(
-        builder: (context,value,_)=>
-        ModalProgressHUD(
+        builder: (context, value, _) => ModalProgressHUD(
           inAsyncCall: value.isCricketPlayerLoginInLoading,
           progressIndicator: THelperFunction.showIndicator(),
           child: SingleChildScrollView(
@@ -65,7 +66,8 @@ class _CricketLoginPlayerState extends State<CricketLoginPlayer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormFieldWidget(
-                            validator: (value) => SValidation.validateEmail(value),
+                            validator: (value) =>
+                                SValidation.validateEmail(value),
                             controller: emailAddressController,
                             keyboardType: TextInputType.emailAddress,
                             labelText: "Email Address",
@@ -74,14 +76,27 @@ class _CricketLoginPlayerState extends State<CricketLoginPlayer> {
                           const SizedBox(
                             height: TSized.spacebetweenItem,
                           ),
-                          TextFormField(
-                            validator: (value) =>
-                                SValidation.validatePassword(value),
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.password),
-                              labelText: "Password",
+                          ValueListenableBuilder(
+                            valueListenable: isObsecure,
+                            builder: (context, value, child) => TextFormField(
+                              obscuringCharacter: "*",
+                              obscureText: isObsecure.value,
+                              validator: (value) =>
+                                  SValidation.validatePassword(value),
+                              controller: passwordController,
+                              keyboardType: TextInputType.text,
+                              decoration:  InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(isObsecure.value
+                                      ? Iconsax.eye_slash
+                                      : Iconsax.eye),
+                                  onPressed: () {
+                                    isObsecure.value = !isObsecure.value;
+                                  },
+                                ),
+                                prefixIcon: const Icon(Icons.password),
+                                labelText: "Password",
+                              ),
                             ),
                           ),
                           const SizedBox(

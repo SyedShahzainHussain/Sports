@@ -25,7 +25,7 @@ class _CricketOrganizationFormState extends State<CricketOrganizationForm> {
   final addressController = TextEditingController();
   final countryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  ValueNotifier<bool> isObsecure = ValueNotifier<bool>(true);
   String? _selectedValue;
   PdfFile? pdfFile;
 
@@ -43,10 +43,12 @@ class _CricketOrganizationFormState extends State<CricketOrganizationForm> {
     if (_selectedValue == null || countryController.text.isEmpty) {
       // Check if the context is available within a Scaffold
       THelperFunction.showFlushBar(
-          "All Fields Are Required!", icon: const Icon(
-        Icons.error,
-        color: Colors.red,
-      ), context);
+          "All Fields Are Required!",
+          icon: const Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          context);
     } else {
       context.read<CricketOrganizationViewModel>().cricketOrganizationSignUpApi(
             name: nameController.text.toString(),
@@ -89,13 +91,25 @@ class _CricketOrganizationFormState extends State<CricketOrganizationForm> {
             const SizedBox(
               height: TSized.spacebetweenItem,
             ),
-            TextFormField(
-              validator: (value) => SValidation.validatePassword(value),
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.password),
-                labelText: "Organization Password",
+            ValueListenableBuilder(
+              valueListenable: isObsecure,
+              builder: (context, value, child) => TextFormField(
+                obscuringCharacter: "*",
+                obscureText: isObsecure.value,
+                validator: (value) => SValidation.validatePassword(value),
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        isObsecure.value ? Iconsax.eye_slash : Iconsax.eye),
+                    onPressed: () {
+                      isObsecure.value = !isObsecure.value;
+                    },
+                  ),
+                  prefixIcon: const Icon(Icons.password),
+                  labelText: "Organization Password",
+                ),
               ),
             ),
             const SizedBox(

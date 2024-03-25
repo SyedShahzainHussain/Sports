@@ -29,6 +29,7 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
   final emailAddressController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  ValueNotifier<bool> isObsecure = ValueNotifier<bool>(true);
 
   bool? _isMale;
   String? _selectedValue;
@@ -62,15 +63,21 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
         countryController.text.isEmpty ||
         _isMale == null) {
       // Check if the context is available within a Scaffold
-      THelperFunction.showFlushBar("All Fields Are Required!", icon: const Icon(
-        Icons.error,
-        color: Colors.red,
-      ), context);
+      THelperFunction.showFlushBar(
+          "All Fields Are Required!",
+          icon: const Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          context);
     } else if (dateOfBirth == null) {
-      THelperFunction.showFlushBar("Date of birth is required",icon: const Icon(
-        Icons.error,
-        color: Colors.red,
-      ), context);
+      THelperFunction.showFlushBar(
+          "Date of birth is required",
+          icon: const Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          context);
     } else {
       _formKey.currentState!.save();
       final body = {
@@ -120,15 +127,28 @@ class _CricketPlayerFormState extends State<CricketPlayerForm> {
             const SizedBox(
               height: TSized.spacebetweenItem,
             ),
-            TextFormField(
-              validator: (value) => SValidation.validatePassword(value),
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.password),
-                labelText: "Password",
+            ValueListenableBuilder(
+              valueListenable: isObsecure,
+              builder: (context, value, child) => TextFormField(
+                obscuringCharacter: "*",
+                obscureText: isObsecure.value,
+                validator: (value) => SValidation.validatePassword(value),
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        isObsecure.value ? Iconsax.eye_slash : Iconsax.eye),
+                    onPressed: () {
+                      isObsecure.value = !isObsecure.value;
+                    },
+                  ),
+                  prefixIcon: const Icon(Icons.password),
+                  labelText: "Password",
+                ),
               ),
             ),
+
             const SizedBox(
               height: TSized.spacebetweenItem,
             ),

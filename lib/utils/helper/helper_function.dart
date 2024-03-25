@@ -170,7 +170,7 @@ class THelperFunction {
   }
 
   static Widget showIndicator([double? size = 50]) {
-    return SpinKitHourGlass(
+    return SpinKitCubeGrid(
       color: TColors.primary,
       size: size!,
     );
